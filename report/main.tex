@@ -94,6 +94,8 @@
     \end{itemize}
 \end{frame}
 
+\section{Sorting Algorithms comparison}
+
 \begin{frame}
     \frametitle{Understanding Big O Notation}
 
@@ -126,6 +128,7 @@
               \end{itemize}
     \end{itemize}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Classic Sorting Algorithms and Their Complexities}
@@ -170,7 +173,7 @@
     \end{table}
 \end{frame}
 
-
+\section{Reviewing some Sorting Algorithms}
 
 \begin{frame}[fragile]
     \frametitle{Selection Sort Algorithm}
@@ -198,6 +201,142 @@
     \end{minted}
     \rule{\textwidth}{1pt}
 \end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Insertion Sort Algorithm}
+    \framesubtitle{Building the Sorted Array}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+              \begin{itemize}
+                  \item Builds the sorted array one element at a time.
+                  \item Iterates through the array, shifting elements to the right to make space for the current element.
+              \end{itemize}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def insertion_sort(arr):
+            for i in range(1, len(arr)):
+                key = arr[i]
+                j = i-1
+                while j >= 0 and key < arr[j]:
+                    arr[j+1] = arr[j]
+                    j -= 1
+                arr[j+1] = key
+            return arr
+    \end{minted}
+    \rule{\textwidth}{1pt}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Bubble Sort Algorithm}
+    \framesubtitle{Bubbling Up the Largest Element}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+              \begin{itemize}
+                  \item Repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.
+                  \item Continues until no more swaps are needed.
+              \end{itemize}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def bubble_sort(arr):
+            n = len(arr)
+            for i in range(n):
+                for j in range(0, n-i-1):
+                    if arr[j] > arr[j+1]:
+                        arr[j], arr[j+1] = arr[j+1], arr[j]
+            return arr
+    \end{minted}
+    \rule{\textwidth}{1pt}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Quicksort Algorithm}
+    \framesubtitle{Divide and Conquer}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+              \begin{itemize}
+                  \item Employs a divide-and-conquer strategy to sort the array.
+                  \item Selects a 'pivot' element and partitions the array into sub-arrays of elements less than and greater than the pivot.
+                  \item Recursively applies the same strategy to the sub-arrays.
+                  \item Highly efficient for large datasets, with average time complexity of O(n log n).
+              \end{itemize}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def quicksort(arr):
+            if len(arr) <= 1:
+                return arr
+            pivot = arr[len(arr) // 2]
+            left = [x for x in arr if x < pivot]
+            middle = [x for x in arr if x == pivot]
+            right = [x for x in arr if x > pivot]
+            return quicksort(left) + middle + quicksort(right)
+    \end{minted}
+    \rule{\textwidth}{1pt}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{Merge Sort Algorithm}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+              \begin{itemize}
+                  \item Another divide-and-conquer algorithm that divides the array into halves, sorts each half, and then merges the sorted halves together.
+                  \item Begins with the division of the array into smallest manageable units, then merges units in a sorted manner to form larger sorted sections until the whole array is merged back together.
+                  \item Consistently performs with a time complexity of O(n log n), making it highly efficient for large data sets.
+              \end{itemize}
+        \item \textbf{Key Features}
+              \begin{itemize}
+                  \item Predictable performance.
+                  \item Stable sorting algorithm.
+                  \item Popular. Default sorting algorithm for many programming languages, but tends to be replaced by Timsort in practice.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Merge Sort Algorithm}
+
+    \scriptsize
+    \begin{minted}{python}
+        def merge_sort(arr):
+            if len(arr) > 1:
+                mid = len(arr) // 2
+                L = arr[:mid]
+                R = arr[mid:]
+                merge_sort(L)
+                merge_sort(R)
+                i = j = k = 0
+                while i < len(L) and j < len(R):
+                    if L[i] < R[j]:
+                        arr[k] = L[i]
+                        i += 1
+                    else:
+                        arr[k] = R[j]
+                        j += 1
+                    k += 1
+                while i < len(L):
+                    arr[k] = L[i]
+                    i, k = i + 1, k + 1
+                while j < len(R):
+                    arr[k] = R[j]
+                    j, k = j + 1, k + 1
+            return arr
+    \end{minted}
+\end{frame}
+
+
 
 
 \begin{frame}
