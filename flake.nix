@@ -31,6 +31,10 @@
             
             # Adding Java for LTeX spell checker (vscode extension)
             pkgs.openjdk11
+
+            # Python and pigments for LaTeX
+            pkgs.python311
+            pkgs.python311Packages.pygments
           ];
 
           # environment variables for Rust

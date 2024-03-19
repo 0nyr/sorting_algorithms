@@ -24,6 +24,11 @@
 *.lof
 *.spl
 *.abs
+*.nav
+*.snm
+*.vrb
+*.pygstyle
+*.pygtex
 
 # Rust
 /target

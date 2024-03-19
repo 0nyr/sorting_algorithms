@@ -1,6 +1,10 @@
-\documentclass[compress,12pt]{beamer}
+\documentclass[compress,12pt,bookmark]{beamer}
 
 \usepackage{booktabs}
+%\usepackage{verbatim}
+
+% packages for code
+\usepackage{minted}
 
 \usetheme{Arguelles}
 
@@ -166,6 +170,61 @@
     \end{table}
 \end{frame}
 
+
+
+\begin{frame}[fragile]
+    \frametitle{Selection Sort Algorithm}
+    \framesubtitle{Simplicity in Action}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+              \begin{itemize}
+                  \item Iteratively selects the smallest element from the unsorted portion and swaps it with the element at the current position.
+                  \item Continues until the entire array is sorted.
+              \end{itemize}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def selection_sort(arr):
+            for i in range(len(arr)):
+                min_idx = i
+                for j in range(i+1, len(arr)):
+                    if arr[j] < arr[min_idx]:
+                        min_idx = j
+                arr[i], arr[min_idx] = arr[min_idx], arr[i]
+            return arr
+    \end{minted}
+    \rule{\textwidth}{1pt}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Thank You for Your Attention!}
+    \framesubtitle{Further Resources}
+
+    \begin{itemize}
+        \item \textbf{Useful Links}
+              \begin{itemize}
+                  \item Big O Cheat Sheet: \url{https://www.bigocheatsheet.com/}
+                        \begin{itemize}
+                            \item A handy reference for complexity of common data structures and algorithms.
+                        \end{itemize}
+                  \item Sorting Algorithms with Animations: \url{https://www.toptal.com/developers/sorting-algorithms/bubble-sort}
+                        \begin{itemize}
+                            \item Explore how different sorting algorithms work with interactive animations.
+                        \end{itemize}
+              \end{itemize}
+        \item \textbf{Contact \& Feedback}
+              \begin{itemize}
+                  \item My GitHub: \url{https://github.com/0nyr}
+                  \item This presentation: \url{https://github.com/0nyr/sorting_algorithms}
+              \end{itemize}
+    \end{itemize}
+
+    \centering{Once again, thank you and have a great day!}
+\end{frame}
 
 
 \end{document}
