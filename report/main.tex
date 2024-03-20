@@ -6,6 +6,20 @@
 % packages for code
 \usepackage{minted}
 
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta}
+\usepackage{xcolor}
+
+% Define custom colors
+\definecolor{CustomCyan}{RGB}{0, 183, 235}
+\definecolor{CustomGreen}{RGB}{0, 178, 89}
+\definecolor{CustomYellow}{RGB}{220, 190, 0}
+\definecolor{CustomOrange}{RGB}{255, 135, 0}
+\definecolor{CustomRed}{RGB}{255, 30, 0}
+\definecolor{CustomPurple}{RGB}{128, 0, 128}
+\definecolor{CustomBlack}{RGB}{20, 20, 20}
+
 \usetheme{Arguelles}
 
 \title{Sorts}
@@ -23,6 +37,16 @@
 \frame[plain]{\titlepage}
 
 \section{Introduction}
+
+\begin{frame}[plain,standout]
+    \centering
+    \Huge
+    Introduction
+
+    \normalsize
+    Discussing complexity, and efficiency of algorithms.
+    \vfill
+\end{frame}
 
 \begin{frame}
     \frametitle{Runtime and Memory Complexity: Basics}
@@ -94,10 +118,21 @@
     \end{itemize}
 \end{frame}
 
-\section{Sorting Algorithms comparison}
+\section{Comparing Algorithms}
+
+\begin{frame}[plain,standout]
+    \centering
+    \Huge
+    Comparing Algorithms
+
+    \normalsize
+    Big O notation, visualization, and classic sorting algorithms.
+    \vfill
+\end{frame}
 
 \begin{frame}
     \frametitle{Understanding Big O Notation}
+    \framesubtitle{A teaspoon of math}
 
     \begin{itemize}
         \item \textbf{Big O Notation}: Describes the upper bound of complexity.
@@ -129,9 +164,53 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+    \frametitle{Visualization}
+    \framesubtitle{A picture is worth a \texttt{0x3E8} words}
+
+    \def\stretchfactor{1.5}
+    \begin{tikzpicture}[xscale=\stretchfactor, every node/.style={font=\small}]
+
+        % Grid and Axes
+        \draw[very thin,color=gray] (-0.1,0.1) grid (5.9,5.9);
+        \draw[->] (-0.2,0) -- (6.2,0) node[right] {$n$};
+        \draw[->] (0,-0.2) -- (0,6.2) node[above] {$f(n)$};
+
+        % axis label
+        \draw (3,0) node[below] {input size};
+        \draw (0,3) node[rotate=90, above] {impact on computation time};
+
+        % display a dot at (0, 0)
+        \fill[black] (0,0) circle (0.05);
+      
+        % Constant Time (O(1))
+        \draw[color=CustomCyan, domain=0.0:6.0, thick] plot(\x, 0) node[right, above] {$O(1)$};
+      
+        % Logarithmic Time (O(log n))
+        \draw[color=CustomGreen, domain=0:6.0, thick] plot(\x, {ln(\x + 1)}) node[right, right] {$O(\log n)$};
+
+        % Linear Time (O(n))
+        \draw[color=CustomYellow, domain=0.0:6.0, thick] plot (\x, \x) node[right, right] {$O(n)$};
+
+        % Linearithmic Time (O(n log n))
+        \draw[color=CustomOrange, domain=0:2.8, thick] plot(\x, {\x * ln(\x + 2)/ln(2)}) node[right, right] {$O(n \log n)$};
+
+        % Quadratic Time (O(n^2))
+        \draw[color=CustomRed, domain=0.0:2.07, thick] plot (\x, {(\x + 1) * \x}) node[right, right] {$O(n^2)$};
+
+        % Cubic Time (O(n^3))
+        \draw[color=CustomPurple, domain=0.0:1.25, thick] plot (\x, {(\x + 1) * (\x + 1) * \x}) node[right, right] {$O(n^3)$};
+
+        % Exponential Time (O(2^n))
+        \draw[color=CustomBlack, domain=0:0.636, thick] plot (\x, {pow(2, \x + 1) * (\x + 1) * (\x + 1) - 2}) node[right, right] {$O(2^n)$};
+        
+      \end{tikzpicture}
+\end{frame}
+
 
 \begin{frame}
     \frametitle{Classic Sorting Algorithms and Their Complexities}
+    \framesubtitle{Know your classics!}
     \begin{table}
         \begin{tabular}{lcccc}
             \toprule
@@ -173,7 +252,94 @@
     \end{table}
 \end{frame}
 
-\section{Reviewing some Sorting Algorithms}
+\section{Tips and tricks}
+
+\begin{frame}[plain,standout]
+    \centering
+    \Huge
+    Tips and Tricks
+
+    \normalsize
+    Understanding the basics of sorting algorithms, and how to improve them.
+    \vfill
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Introducing Bubble Sort}
+    \framesubtitle{Humble start}
+
+    \begin{itemize}
+        \item \textbf{How It Works}
+        \begin{itemize}
+            \item Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+            \item Continues until no more swaps are needed.
+            \item It works? Yes. Each inner loop iteration moves elements by one position. In the worst case, it needs \(n\) iterations to move the leftmost element to the rightmost position.
+        \end{itemize}
+        \item \textbf{Complexity: \(\mathcal{O}(n^2)\)}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def bubble_sort(arr):
+            n = len(arr)
+            for _ in range(n):
+                for j in range(n - 1):
+                    if arr[j] > arr[j + 1]:
+                        arr[j], arr[j + 1] = arr[j + 1], arr[j] # Swap
+            return arr
+    \end{minted}
+    \rule{\textwidth}{1pt}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Improving Bubble Sort}
+    \framesubtitle{Stay DRY!}
+
+    \begin{itemize}
+        \item \textbf{Optimizing Bubble Sort}
+            \begin{itemize}
+            \item \textit{Early Termination}: Stop if no swaps are made in an iteration.
+            \item \textit{Reduced Iterations}: Reduce the number of iterations as the array becomes sorted.
+            \end{itemize}
+        \item \textbf{Complexity: \(\mathcal{O}(n^2)\)}
+            \begin{itemize}
+            \item Best case: \(\mathcal{O}(n)\) for already sorted arrays.
+            \end{itemize}
+    \end{itemize}
+
+    \rule{\textwidth}{1pt}
+    \scriptsize
+    \begin{minted}{python}
+        def bubble_sort(arr):
+            n = len(arr)
+            for i in range(n):
+                swapped = False
+                for j in range(i, n - 1):
+                    if arr[j] > arr[j + 1]:
+                        arr[j], arr[j + 1] = arr[j + 1], arr[j] # Swap
+                        swapped = True
+                if not swapped:
+                    break
+            return arr
+    \end{minted}
+    \rule{\textwidth}{1pt}
+
+\end{frame}
+
+
+\section{Reviewing Classics}
+
+\begin{frame}[plain,standout]
+    \centering
+    \Huge
+    Reviewing Classics
+
+    \normalsize
+    Selection, Insertion, Bubble, Merge, and Quick Sort.
+    \vfill
+\end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Selection Sort Algorithm}
